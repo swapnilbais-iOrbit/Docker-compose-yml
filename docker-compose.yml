@@ -3,14 +3,14 @@ version: "3"
 services:
 
     webapp:
-        image: ithings-webapp:1.0.0
+        image: adybunny2326/ithings-webapp:1.0.0
         ports: 
-            - 8000:80
+            - 8004:80
     
     api:
-        image: ithings-api:1.0.0
-        expose:
-            - 8082:8082        
+        image: adybunny2326/ithings-api:1.0.0
+        ports:
+            - 8082:8082       
     
     mysql:
         image: mysql
