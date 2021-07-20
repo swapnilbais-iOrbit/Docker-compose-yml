@@ -2,21 +2,69 @@ version: "3"
 
 services:
 
-    webapp:
-        image: adybunny2326/ithings-webapp:1.0.0
-        ports: 
-            - 8004:80
+    # webapp:
+    #     image: adybunny2326/ithings-webapp:1.0.0
+    #     restart: on-failure
+    #     ports: 
+    #         - 8000:80
+
+    # wizard:
+    #     image: adybunny2326/ithings-wizard:1.0.0
+    #     restart: on-failure
+    #     ports: 
+    #         - 8081:80
     
-    api:
-        image: adybunny2326/ithings-api:1.0.0
-        ports:
-            - 8082:8082       
+    # api:
+    #     image: adybunny2326/ithings-api:1.0.0
+    #     restart: on-failure
+    #     ports:
+    #         - 8082:8082  
+    #     expose:
+    #         # Opens port 8082 on the container
+    #         - 8082
+    #     depends_on:
+    #         - ithings-mysql
+    #     environment:
+    #         - DATABASE_HOST=ithings-mysql
+    #         - DATABASE_USER=smarttest
+    #         - DATABASE_PASSWORD=smarttest
+    #         - DATABASE_NAME=First_Try
+    #         - DATABASE_PORT=3306
+
+    # wizard-php-api:
+    #     image: adybunny2326/ithings-wizard-php-api:1.0.0
+    #     restart: on-failure
+    #     ports:
+    #         - 8090:8090  
+    #     expose:
+    #         # Opens port 8090 on the container
+    #         - 8090   
+
+    # wizard-java-api:
+    #     image: adybunny2326/ithings-wizard-java-api:1.0.0
+    #     restart: on-failure
+    #     ports:
+    #         - 8085:8085  
+    #     expose:
+    #         # Opens port 8085 on the container
+    #         - 8085    
     
-    mysql:
-        image: mysql
+    ithings-mysql:
+        image: mysql:5.7
         restart: always
         environment:
-            MYSQL_ROOT_PASSWORD: "orbit"
-            MYSQL_DATABASE: "orbit"
-            MYSQL_USER: "orbit"
-            MYSQL_PASSWORD: "orbit"
+            MYSQL_ROOT_PASSWORD: "root"
+            MYSQL_DATABASE: "First_Try"
+            MYSQL_USER: "smarttest"
+            MYSQL_PASSWORD: "smarttest"
+        ports:
+            # <Port exposed> : < MySQL Port running inside container>
+            - "3336:3306"
+        volumes:
+            - "./scripts/init.sql:/docker-entrypoint-initdb.d/1.sql"
+            - db:/var/lib/mysql
+
+# Names our volume
+volumes:
+    db:
+          
